@@ -19,7 +19,9 @@ module Player(
   getDamage,
   getArmorDefence,
   isPlayerDead,
-  getPlayerLvl
+  getPlayerLvl,
+  isEnoughGold,
+  playerInfo
 )where
 
 data WeaponType = Sword | Bow | Hammer | Knife deriving (Eq, Ord, Enum)
@@ -119,7 +121,7 @@ askWeapon = do
              "4) Нож\n"
   i <- getLine
   let index = read i :: Int
-  return $ Weapon {wType = chooseWeapon index, wDamage = 3}
+  return $ Weapon {wType = chooseWeapon index, wDamage = 1}
 
 askHelmetArmor :: HelmetArmor
 askHelmetArmor = do
@@ -187,3 +189,12 @@ isEnoughGold p i=
     True
   else
     False
+
+playerInfo :: Player -> IO ()
+playerInfo p = do
+  putStrLn $ concat ["Имя: ",       pName p,
+                     "\nЗдоровье: ", show . pHealth $ p,
+                     "\nОружие: ", show . pWeapon $ p,
+                     "\nБроня: ", show . pArmor $ p,
+                     "\nЗолото: ", show . pGold $ p,
+                     "\nУровень: ", show . pLvl $ p]

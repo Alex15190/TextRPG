@@ -4,6 +4,7 @@ module Level(
 
 import Player
 import Enemy
+import Village
 
 startLevel :: Player -> IO ()
 startLevel  player = do
@@ -25,7 +26,8 @@ nextFight player enemy = do
     gameOver
   else do
     if (isEnemyDead enemy) then
-      goodGameOver
+      goToVillage player
+      startLevel newPlayer
     else
       fight player enemy
 

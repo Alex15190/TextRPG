@@ -17,7 +17,5 @@ startGame = do
 
 runGame :: Player -> IO()
 runGame p = do
-  putStrLn $ concat ["Имя: ",       pName p,
-                     "\nЗдоровье ", show . pHealth $ p,
-                     "\nОружие: ", show . pWeapon $ p]
+  playerInfo p
   startLevel p
