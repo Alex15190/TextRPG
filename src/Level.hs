@@ -25,8 +25,8 @@ nextFight player enemy = do
   if (isPlayerDead player) then
     gameOver
   else do
-    if (isEnemyDead enemy) then
-      goToVillage player
+    if (isEnemyDead enemy) then do
+      let newPlayer = goToVillage player
       startLevel newPlayer
     else
       fight player enemy
