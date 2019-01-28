@@ -9,12 +9,16 @@ import Village
 startLevel :: Player -> IO ()
 startLevel  player = do
   putStrLn $ "Вы встретили: " ++ show enemy
-  putStrLn "Ваши действия: 1) Убежать 2) Ударить!"
+  putStrLn $ "Ваши действия:\n" ++ "1) Ударить!\n" ++ "2) Убежать\n" ++ "3) Выйти из игры"
   sChoose <- getLine
   let iChoose = read sChoose :: Int
   case iChoose of
-       1 -> gameOver
-       2 -> nextFight player{pHealth = (pHealth player - enemyDamage)} enemy{eHealth = (eHealth enemy - d)}
+    1 -> nextFight player{pHealth = (pHealth player - enemyDamage)} enemy{eHealth = (eHealth enemy - d)}
+    2 -> do
+      player <- goToVillage player
+      startLevel player
+    3 -> exitGame
+    _ -> exitGame
   where
     enemy = askEnemy $ getPlayerLvl player
     d = getDamage $ player
@@ -26,20 +30,28 @@ nextFight player enemy = do
     gameOver
   else do
     if (isEnemyDead enemy) then do
-      let newPlayer = goToVillage player
-      startLevel newPlayer
+      putStrLn "Вы одолели врага!"
+      if (pLvl player == 10) then
+        goodGameOver
+      else do
+        player <- goToVillage player{pLvl = pLvl player + 1, pGold = pGold player + pLvl player }
+        startLevel player
     else
       fight player enemy
 
 fight :: Player -> Enemy -> IO ()
 fight player enemy = do
   putStrLn $ "Ваше здоровье: " ++ show (pHealth player) ++ " Здоровье врага: " ++ show (eHealth enemy)
-  putStrLn "Ваши действия: 1) Убежать 2) Ударить!"
+  putStrLn $ "Ваши действия:\n" ++ "1) Ударить!\n" ++ "2) Убежать\n" ++ "3) Выйти из игры"
   sChoose <- getLine
   let iChoose = read sChoose :: Int
   case iChoose of
-      1 -> gameOver
-      2 -> nextFight player{pHealth = (pHealth player - enemyDamage)} enemy{eHealth = (eHealth enemy - d)}
+      1 -> nextFight player{pHealth = (pHealth player - enemyDamage)} enemy{eHealth = (eHealth enemy - d)}
+      2 -> do
+        player <- goToVillage player
+        startLevel player
+      3 -> exitGame
+      _ -> exitGame
     where
       d = getDamage $ player
       enemyDamage = getEnemyDamage player enemy
@@ -51,3 +63,7 @@ gameOver = do
 goodGameOver :: IO()
 goodGameOver = do
   putStrLn "Вы победили!"
+
+exitGame :: IO()
+exitGame  = do
+  putStrLn "Спасибо за игру =)"

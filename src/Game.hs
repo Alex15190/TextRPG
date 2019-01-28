@@ -11,7 +11,7 @@ startGame :: IO()
 startGame = do
   n <- askName
   w <- askWeapon
-  runGame $ createCharacter n 10 w a 10 0
+  runGame $ createCharacter n 10 w a 10 1
   where
     a = askArmor
 
