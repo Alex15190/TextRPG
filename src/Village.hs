@@ -3,6 +3,7 @@ module Village(
 )where
 
 import Player
+import System.Random
 
 goToVillage :: Player -> IO Player
 goToVillage p = do
@@ -52,6 +53,7 @@ goToBlacksmith p = do
     putStrLn $ "Приветствую тебя " ++ pName p ++ ". Я кузнец Алвор из Ривервуда.\n" ++
                "Тут ты можешь прикупить себе оружие и броню, если золота\n" ++
                "хватит."
+    weapon <- askRandomWeapon l
     putStrLn $ "1) " ++ show helmet ++ " за " ++ price ++ " золотых,\n" ++
                "2) " ++ show body ++ " за " ++ price ++ " золотых,\n" ++
                "3) " ++ show boots ++ " за " ++ price ++ " золотых,\n" ++
@@ -92,7 +94,6 @@ goToBlacksmith p = do
     helmet = HelmetArmor{helmetName = "Имперский шлем", helmetPoints = l + 1}
     body = BodyArmor{bodyName = "Сыромятная броня", bodyPoints = l - 1}
     boots = BootsArmor{bootsName = "Сапоги эльфов", bootsPoints = l}
-    weapon = Weapon{wType = Sword, wDamage = l + 2 }
     playerArmor = pArmor p
 
 
@@ -110,3 +111,13 @@ goToEnemy :: Player -> IO Player
 goToEnemy p = do
   putStrLn "Вы направляетесь к врагам. Не теряйте бдительности. Рано или поздно она окупится."
   return p
+
+askRandomWeapon :: Int -> IO Weapon
+askRandomWeapon l = do
+  gi <- randomRIO (1::Int, 4::Int)
+  case gi of
+    1 -> return Weapon{wType = Sword,  wDamage = l + 2 }
+    2 -> return Weapon{wType = Bow,    wDamage = l  }
+    3 -> return Weapon{wType = Hammer, wDamage = l + 3 }
+    4 -> return Weapon{wType = Knife,  wDamage = l + 1 }
+    _ -> return Weapon{wType = Sword,  wDamage = l + 2 }

@@ -185,7 +185,7 @@ isPlayerDead p =
 
 isEnoughGold :: Player -> Int -> Bool
 isEnoughGold p i=
-  if (pGold p > i) then
+  if (pGold p >= i) then
     True
   else
     False

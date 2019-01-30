@@ -32,7 +32,7 @@ nextFight player enemy = do
   else do
     if (isEnemyDead enemy) then do
       putStrLn "Вы одолели врага!"
-      if (pLvl player == 10) then
+      if (pLvl player == 9) then
         goodGameOver
       else do
         player <- goToVillage player{pLvl = pLvl player + 1, pGold = pGold player + pLvl player }
