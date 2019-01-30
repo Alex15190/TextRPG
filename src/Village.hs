@@ -111,13 +111,3 @@ goToEnemy :: Player -> IO Player
 goToEnemy p = do
   putStrLn "Вы направляетесь к врагам. Не теряйте бдительности. Рано или поздно она окупится."
   return p
-
-askRandomWeapon :: Int -> IO Weapon
-askRandomWeapon l = do
-  gi <- randomRIO (1::Int, 4::Int)
-  case gi of
-    1 -> return Weapon{wType = Sword,  wDamage = l + 2 }
-    2 -> return Weapon{wType = Bow,    wDamage = l  }
-    3 -> return Weapon{wType = Hammer, wDamage = l + 3 }
-    4 -> return Weapon{wType = Knife,  wDamage = l + 1 }
-    _ -> return Weapon{wType = Sword,  wDamage = l + 2 }

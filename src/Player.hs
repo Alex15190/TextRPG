@@ -21,8 +21,11 @@ module Player(
   isPlayerDead,
   getPlayerLvl,
   isEnoughGold,
-  playerInfo
+  playerInfo,
+  askRandomWeapon
 )where
+
+import System.Random
 
 data WeaponType = Sword | Bow | Hammer | Knife deriving (Eq, Ord, Enum)
 data HelmetArmor = HelmetArmor{
@@ -142,6 +145,16 @@ askArmor = do
      helmet = askHelmetArmor
      body = askBodyArmor
      boots = askBootsArmor
+
+askRandomWeapon :: Int -> IO Weapon
+askRandomWeapon l = do
+  gi <- randomRIO (1::Int, 4::Int)
+  case gi of
+    1 -> return Weapon{wType = Sword,  wDamage = l + 2 }
+    2 -> return Weapon{wType = Bow,    wDamage = l  }
+    3 -> return Weapon{wType = Hammer, wDamage = l + 3 }
+    4 -> return Weapon{wType = Knife,  wDamage = l + 1 }
+    _ -> return Weapon{wType = Sword,  wDamage = l + 2 }
 
 createArmor :: HelmetArmor -> BodyArmor -> BootsArmor -> Armor
 createArmor h b bo =
