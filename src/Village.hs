@@ -92,7 +92,7 @@ goToBlacksmith p = do
     helmet = HelmetArmor{helmetName = "Имперский шлем", helmetPoints = l + 1}
     body = BodyArmor{bodyName = "Сыромятная броня", bodyPoints = l - 1}
     boots = BootsArmor{bootsName = "Сапоги эльфов", bootsPoints = l}
-    weapon = Weapon{wType = Sword, wDamage = l + 1 }
+    weapon = Weapon{wType = Sword, wDamage = l + 2 }
     playerArmor = pArmor p
 
 

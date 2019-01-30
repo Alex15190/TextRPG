@@ -8,6 +8,8 @@ import Village
 
 startLevel :: Player -> IO ()
 startLevel  player = do
+  enemy <- askEnemy $ getPlayerLvl player
+  let enemyDamage = getEnemyDamage player enemy
   putStrLn $ "Вы встретили: " ++ show enemy
   putStrLn $ "Ваши действия:\n" ++ "1) Ударить!\n" ++ "2) Убежать\n" ++ "3) Выйти из игры"
   sChoose <- getLine
@@ -20,9 +22,8 @@ startLevel  player = do
     3 -> exitGame
     _ -> exitGame
   where
-    enemy = askEnemy $ getPlayerLvl player
     d = getDamage $ player
-    enemyDamage = getEnemyDamage player enemy
+
 
 nextFight :: Player -> Enemy -> IO ()
 nextFight player enemy = do

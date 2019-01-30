@@ -7,6 +7,7 @@ module Enemy(
 )where
 
 import Player
+import System.Random
 
 data EnemyType =  Orc | HalfOgre | Elf | Zombie deriving (Eq, Ord, Enum)
 
@@ -31,9 +32,16 @@ instance Show Enemy where
                    " и жизнями: ",
                    show . eHealth $ e]
 
-askEnemy :: Int -> Enemy
-askEnemy i =
-  Enemy{eType = Orc, eDamage = 2 + i, eHealth = 4 + i}
+askEnemy :: Int -> IO Enemy
+askEnemy i = do
+  gi <- randomRIO (1::Int, 4::Int)
+  case gi of
+    1 -> return Enemy{eType = Orc, eDamage = 2 + i, eHealth = 4 + i}
+    2 -> return Enemy{eType = HalfOgre, eDamage = 2 + i, eHealth = 5 + i}
+    3 -> return Enemy{eType = Elf, eDamage = 3 + i, eHealth = 3 + i}
+    4 -> return Enemy{eType = Zombie, eDamage = 1 + i, eHealth = 6 + i}
+    _ -> return Enemy{eType = Orc, eDamage = 2 + i, eHealth = 4 + i}
+
 
 isEnemyDead :: Enemy -> Bool
 isEnemyDead e =
