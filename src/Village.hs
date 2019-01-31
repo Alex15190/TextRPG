@@ -101,7 +101,7 @@ goToBlacksmith p = do
 
 goToMayor :: Player -> IO Player
 goToMayor p = do
-  putStrLn $ "Здравствуй " ++ pName p ++ "\n" ++
+  putStrLn $ "Здравствуй " ++ pName p ++ "\n" ++ "." ++
              "Я Мэр этой деревни, как бы странно это не звучало.\n" ++
              "Тут ты можешь передохнуть и востановить все свои\n" ++
              "силы перед следующим боем.\n"
